@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2702021e688d604da74790126c493d6, type: 3}
+  m_Name: GunData
+  m_EditorClassIdentifier: 
+  gunID: 0
+  gunName: PeacemakerGun
+  gunKind: 0
+  element: 0
+  damage: 4
+  ammoPerShot: 1
+  bulletsPerShot: 1
+  bulletSpread: 0
+  reloadTime: 2
+  fireRate: 4
+  bulletSpeed: 7
+  canEquipParts: 1
+  parts: 3
+  maxAmmo: 6
+  curAmmo: 0
+  baseDamage: 0
+  basefireRate: 0
