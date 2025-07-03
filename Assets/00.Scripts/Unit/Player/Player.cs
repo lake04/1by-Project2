@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Purchasing;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Player : Unit
@@ -11,6 +11,11 @@ public class Player : Unit
     [SerializeField] private Transform dustPos;
     public static Player Instance;
     public UnitType unitType = UnitType.Player;
+
+    [SerializeField] private Image hitEffect;
+    private bool isInvincible = false;
+    [SerializeField] private Transform handPos1;
+    [SerializeField] private Transform handPos2;
 
     #region compoment
     [Header("컴포넌트들")]
@@ -43,6 +48,7 @@ public class Player : Unit
 
     float handAngle;
     Vector2 target, mouse;
+
     #endregion
 
     #endregion
@@ -68,9 +74,12 @@ public class Player : Unit
         AimingPoint();
         Roll();
         HandAngle();
-        FlipSpriteByMouse();
 
         Fire();
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            TakeDamage(1f);
+        }
     }
 
     private void FixedUpdate()
@@ -99,24 +108,29 @@ public class Player : Unit
     private void ControlPlayer()
     {
         Move();
+        FlipByMouse();
     }
 
-    private void UpdateDirection()
+ 
+    private void FlipByMouse()
     {
-        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
-        {
-            spriteRenderer.flipX = false;
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        }
-        if (Input.GetAxisRaw("Horizontal") == -1)
+        if (mouseWorldPos.x < transform.position.x)
         {
-            spriteRenderer.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
+            hand.transform.position = handPos1.position;
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            
+            hand.transform.position = handPos2.position;
         }
     }
 
     public override void Move()
     {
-        UpdateDirection(); 
 
         if (!isMove) return;
 
@@ -139,9 +153,6 @@ public class Player : Unit
             if (dust.isPlaying)
                 dust.Stop();
         }
-
-        animator.SetFloat("inPutX", movement.x);
-        animator.SetFloat("inPutY", movement.y);
 
         rigidbody2D.velocity = movement.normalized * moveSpeed;
     }
@@ -205,7 +216,6 @@ public class Player : Unit
                 if (gun.curAmmo >= gun.ammoPerShot)
                 {
                     StartCoroutine(gun.Fire(UnitType.enemy));
-
                 }
                 else
                     StartCoroutine(gun.MeleeAttack());
@@ -220,37 +230,29 @@ public class Player : Unit
             }
         }
     }
+
     private void HandAngle()
     {
-        target = hand.transform.position;
-        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = mouseWorld - hand.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        Vector2 direction = mouse - target;
-        handAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bool isLeft = mouseWorld.x < transform.position.x;
 
-        hand.transform.rotation = Quaternion.Euler(0, 0, handAngle);
-
-        if (mouse.x < transform.position.x)
+        if (isLeft)
         {
-            hand.transform.localScale = new Vector3(1, -1, 1);
+            hand.transform.rotation = Quaternion.Euler(0, 0, angle); 
+            hand.transform.localScale = new Vector3(-1, -1, 1);          
+            hand.transform.position = handPos1.position;
         }
         else
         {
+            hand.transform.rotation = Quaternion.Euler(0, 0, angle);
             hand.transform.localScale = new Vector3(1, 1, 1);
+            hand.transform.position = handPos2.position;
         }
     }
 
-
-    private void FlipSpriteByMouse()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-
-        if (Mathf.Abs(horizontal) > 0.1f)
-        {
-            spriteRenderer.flipX = mouse.x < transform.position.x;
-        }
-    }
 
     #endregion
     private void OnCollisionEnter2D(Collision2D collision)
@@ -281,6 +283,56 @@ public class Player : Unit
         {
             Debug.Log("피격 당함");
             curHp -= _damage;
+            GameManager.Instance.ChageHp();
+;            StartCoroutine(HitEffect());
+            StartCoroutine(Invincible(0.5f));
+
         }
     }
+
+    private IEnumerator HitEffect()
+    {
+        Color color = hitEffect.color;
+        color.a = 0.4f;
+        hitEffect.color = color;
+
+        while(color.a >=0.0f)
+        {
+            color.a -= Time.deltaTime;
+            hitEffect.color = color;
+         
+            yield return null;
+        }
+
+    }
+
+    private IEnumerator Invincible(float duration)
+    {
+        isInvincible = true;
+        float elapsed = 0f;
+        float blinkInterval = 0.15f;
+
+        Color color = spriteRenderer.color;
+
+        while (elapsed < duration)
+        {
+            color.a = 0.4f;
+            spriteRenderer.color = color;
+            hand.GetComponent<SpriteRenderer>().color= color;
+            yield return new WaitForSeconds(blinkInterval);
+
+            color.a = 1f;
+            spriteRenderer.color = color;
+            hand.GetComponent<SpriteRenderer>().color = color;
+            yield return new WaitForSeconds(blinkInterval);
+
+            elapsed += blinkInterval * 2;
+        }
+
+        color.a = 1f;
+        spriteRenderer.color = color;
+        isInvincible = false;
+    }
+
+
 }

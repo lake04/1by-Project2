@@ -31,6 +31,12 @@ public class Gun : MonoBehaviour
     public float fireRate;
     public float bulletSpeed;
 
+    private int curentExp;
+    private int maxExp;
+    private int curLevel;
+    private int maxLevel;
+
+    public List<PartData> equippedParts = new List<PartData>();
 
     private Vector2 lastMoveDirection = Vector2.right;
     public Vector2 meleeSize = new Vector2(1.5f, 1.0f);
@@ -171,6 +177,27 @@ public class Gun : MonoBehaviour
         curAmmo -= ammoPerShot;
         yield return new WaitForSeconds(AttackTime());
         isAtttack = true;
+    }
+
+    public bool AttachPart(PartData part)
+    {
+        if (equippedParts.Count >= parts) return false;
+
+        equippedParts.Add(part);
+        ApplyPartEffect(part);
+        return true;
+    }
+
+    public void ApplyPartEffect(PartData part)
+    {
+        damage += part.damage;
+        fireRate += part.fireRate;
+    }
+
+    public void RemovePartEffect(PartData part)
+    {
+        damage -= part.damage;
+        fireRate -= part.fireRate;
     }
 
 }
