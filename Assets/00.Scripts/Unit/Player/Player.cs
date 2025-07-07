@@ -51,6 +51,11 @@ public class Player : Unit
 
     #endregion
 
+    public Text noAmmoText;
+    public float showTime = 1.5f;
+
+    private bool isTextShowing = false;
+
     #endregion
 
     private void Awake()
@@ -101,7 +106,7 @@ public class Player : Unit
         isAttack = true;
 
         target = transform.position;
-
+        noAmmoText.gameObject.SetActive(false);
     }
 
     #region ¿òÁ÷ÀÓ 
@@ -218,7 +223,11 @@ public class Player : Unit
                     StartCoroutine(gun.Fire(UnitType.enemy));
                 }
                 else
+                {
+                    ShowNoAmmoText();
                     StartCoroutine(gun.MeleeAttack());
+
+                }
             }
 
         }
@@ -277,7 +286,7 @@ public class Player : Unit
     {
         if (curHp <= 0)
         {
-            Dead();
+            //Dead();
         }
         else
         {
@@ -290,8 +299,19 @@ public class Player : Unit
         }
     }
 
+    public virtual void Dead()
+    {
+        hand.SetActive(false);
+        OnAnim(3);
+    }
+    public void EndDir()
+    {
+        CircleEffect.Instance.LoadScene("Title");
+
+    }
     private IEnumerator HitEffect()
     {
+        if (hitEffect == null) hitEffect = GameObject.Find("Hit").GetComponent<Image>();
         Color color = hitEffect.color;
         color.a = 0.4f;
         hitEffect.color = color;
@@ -304,6 +324,14 @@ public class Player : Unit
             yield return null;
         }
 
+    }
+
+    void ShowNoAmmoText()
+    {
+        if (!isTextShowing)
+        {
+            StartCoroutine(ShowTextCoroutine());
+        }
     }
 
     private IEnumerator Invincible(float duration)
@@ -334,5 +362,12 @@ public class Player : Unit
         isInvincible = false;
     }
 
-
+    private IEnumerator ShowTextCoroutine()
+    {
+        isTextShowing = true;
+        noAmmoText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(showTime);
+        noAmmoText.gameObject.SetActive(false);
+        isTextShowing = false;
+    }
 }

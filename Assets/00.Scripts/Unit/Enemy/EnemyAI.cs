@@ -33,11 +33,22 @@ public class EnemyAI : MonoBehaviour
 
             if (dist < attackRange)
             {
-                if (!isAttacking) StartCoroutine(AttackRoutine());
+
+                if (!isAttacking)
+                {
+                    StartCoroutine(AttackRoutine());
+                }
             }
-            else if(dist < searchRange)
+            else if(dist < searchRange )
             {
-                enemy.MoveTo(target.position);
+
+                if (dist >attackRange)
+                {
+
+                }
+               
+                    enemy.MoveTo(target.position);
+
             }
             else
             {

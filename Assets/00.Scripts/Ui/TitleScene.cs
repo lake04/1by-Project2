@@ -11,11 +11,11 @@ public class TitleScene : MonoBehaviour
 
     private void Start()
     {
-        Invoke("waiting", 2);
+        Invoke("waiting", 1);
     }
     public void OnClickPlay()
     {
-        Invoke("Play",2);
+        Invoke("Play",1);
     }
     private void Update()
     {

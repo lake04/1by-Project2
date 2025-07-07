@@ -40,6 +40,18 @@ public class Bullet : MonoBehaviour
             Return();
         }
 
+        if(collision.CompareTag("Enemy"))
+        {
+            GameObject enemy = collision.gameObject;
+            enemy.GetComponent<Enemy>().TakeDamage(damage);
+            GameObject curHit = hitPartcle;
+            if (hitPartcle != null)
+            {
+                PoolingManager.Instance.GetObject(curHit, transform.position, Quaternion.Euler(0, transform.eulerAngles.y + 180, 0));
+            }
+            Return();
+        }
+
     }
 
     public void Setting(UnitType _type,float _damage, Element _element, float _speed)

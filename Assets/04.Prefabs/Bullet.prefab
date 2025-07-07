@@ -161,8 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffcb2c3927a6224b9917b071745e0fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   damage: 0
-  hitPartcle: {fileID: 4814434266568996615, guid: 3cddbb8ec7593ac469af567002bb3170, type: 3}
+  hitPartcle: {fileID: 4814434266568996615, guid: 03bffbbb01f66f34dbfcd312c6931537, type: 3}
   element: 0
+  type: 0
   isPooled: 0
