@@ -116,23 +116,28 @@ public class Player : Unit
         FlipByMouse();
     }
 
- 
+
     private void FlipByMouse()
     {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mouseScreen = Input.mousePosition;
+        mouseScreen.z = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
+
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreen);
+
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (mouseWorldPos.x < transform.position.x)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            spriteRenderer.flipX = false;
             hand.transform.position = handPos1.position;
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
-            
+            spriteRenderer.flipX = true;
             hand.transform.position = handPos2.position;
         }
     }
+
 
     public override void Move()
     {
