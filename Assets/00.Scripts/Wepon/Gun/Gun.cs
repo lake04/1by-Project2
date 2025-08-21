@@ -154,24 +154,18 @@ public class Gun : MonoBehaviour
         for (int i = 0; i < bulletsPerShot; i++)
         {
             Sprite bulletSprite = BulletManager.Instance.GetBulletSprite(gunKind, element);
-            GameObject bulletObj = PoolingManager.Instance.GetObject(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject bulletObj = PoolingManager.Instance.GetObject(bulletPrefab, firePos.transform.position, Quaternion.identity);
             if (bulletObj == null) continue;
 
             Bullet bullet = bulletObj.GetComponent<Bullet>();
 
             bullet.isPooled = true;
-            bullet.Setting(_type, damage, element, bulletSpeed);
+            Vector2 dir = (aimingPoint.position - transform.position).normalized;
+            //float angleOffset = UnityEngine.Random.Range(-bulletSpread, bulletSpread);
+            //dir = Quaternion.Euler(0, 0, angleOffset) * dir;
             bullet.GetComponent<SpriteRenderer>().sprite = bulletSprite;
 
-            Vector2 dir = (aimingPoint.position - transform.position).normalized;
-            float angleOffset = UnityEngine.Random.Range(-bulletSpread, bulletSpread);
-            dir = Quaternion.Euler(0, 0, angleOffset) * dir;
-
-            Rigidbody2D rb = bulletObj.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.velocity = dir * bulletSpeed;
-            }
+            bullet.Setting(_type, damage, element, bulletSpeed, dir);
         }
 
         curAmmo -= ammoPerShot;
@@ -200,4 +194,5 @@ public class Gun : MonoBehaviour
         fireRate -= part.fireRate;
     }
 
+   
 }

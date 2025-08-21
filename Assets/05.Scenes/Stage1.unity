@@ -408,7 +408,6 @@ GameObject:
   - component: {fileID: 115223602}
   - component: {fileID: 115223601}
   - component: {fileID: 115223600}
-  - component: {fileID: 115223599}
   - component: {fileID: 115223598}
   - component: {fileID: 115223603}
   m_Layer: 6
@@ -450,30 +449,6 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: d7c3688baf7624f409a895408934cf84, type: 2}
---- !u!114 &115223599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115223596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ComponentVersion: 1
-  m_AssetsPPU: 100
-  m_RefResolutionX: 1920
-  m_RefResolutionY: 1080
-  m_CropFrame: 0
-  m_GridSnapping: 0
-  m_FilterMode: 0
-  m_UpscaleRT: 0
-  m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!114 &115223600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,7 +536,7 @@ Camera:
   far clip plane: 1000
   field of view: 72.9
   orthographic: 1
-  orthographic size: 5.4
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

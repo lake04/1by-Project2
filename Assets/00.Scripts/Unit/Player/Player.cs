@@ -81,7 +81,7 @@ public class Player : Unit
         HandAngle();
 
         Fire();
-        if(Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
         {
             TakeDamage(1f);
         }
@@ -100,8 +100,6 @@ public class Player : Unit
         Cursor.visible = false;
         maxHp = 20f;
         curHp = maxHp;
-        moveSpeed = 5f;
-        damage = 5f;
         attackCoolTime = 0.5f;
         isAttack = true;
 
@@ -128,12 +126,12 @@ public class Player : Unit
 
         if (mouseWorldPos.x < transform.position.x)
         {
-            spriteRenderer.flipX = false;
+            spriteRenderer.flipX = true;
             hand.transform.position = handPos1.position;
         }
         else
         {
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = false;
             hand.transform.position = handPos2.position;
         }
     }
@@ -225,6 +223,7 @@ public class Player : Unit
             {
                 if (gun.curAmmo >= gun.ammoPerShot)
                 {
+                    CameraShake.Instance.OnShakeCamera(0.25f, 0.23f);
                     StartCoroutine(gun.Fire(UnitType.enemy));
                 }
                 else
@@ -255,8 +254,8 @@ public class Player : Unit
 
         if (isLeft)
         {
-            hand.transform.rotation = Quaternion.Euler(0, 0, angle); 
-            hand.transform.localScale = new Vector3(-1, -1, 1);          
+            hand.transform.rotation = Quaternion.Euler(0, 0, angle);
+            hand.transform.localScale = new Vector3(1, -1, 1);
             hand.transform.position = handPos1.position;
         }
         else
@@ -271,10 +270,10 @@ public class Player : Unit
     #endregion
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             Bullet curBullet = collision.gameObject.GetComponent<Bullet>();
-            if(curBullet.type == unitType)
+            if (curBullet.type == unitType)
             {
                 TakeDamage(curBullet.damage);
                 curBullet.Return();
@@ -289,18 +288,15 @@ public class Player : Unit
     }
     public override void TakeDamage(float _damage)
     {
+
+        Debug.Log("피격 당함");
+        curHp -= _damage;
+        GameManager.Instance.ChageHp();
+        ; StartCoroutine(HitEffect());
+        StartCoroutine(Invincible(0.5f));
         if (curHp <= 0)
         {
             //Dead();
-        }
-        else
-        {
-            Debug.Log("피격 당함");
-            curHp -= _damage;
-            GameManager.Instance.ChageHp();
-;            StartCoroutine(HitEffect());
-            StartCoroutine(Invincible(0.5f));
-
         }
     }
 
@@ -321,11 +317,11 @@ public class Player : Unit
         color.a = 0.4f;
         hitEffect.color = color;
 
-        while(color.a >=0.0f)
+        while (color.a >= 0.0f)
         {
             color.a -= Time.deltaTime;
             hitEffect.color = color;
-         
+
             yield return null;
         }
 
@@ -351,7 +347,7 @@ public class Player : Unit
         {
             color.a = 0.4f;
             spriteRenderer.color = color;
-            hand.GetComponent<SpriteRenderer>().color= color;
+            hand.GetComponent<SpriteRenderer>().color = color;
             yield return new WaitForSeconds(blinkInterval);
 
             color.a = 1f;

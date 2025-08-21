@@ -1,56 +1,44 @@
 using System.Collections;
 using UnityEngine;
 
-public class CameraShake : MonoBehaviour
+public class CameraShake : Singleton<CameraShake>
 {
-    public static CameraShake Instance { get; private set; }
-
-    [SerializeField] private float m_roughness = 25f;
-    [SerializeField] private float m_magnitude = 0.5f;
-
-    private Vector3 originalPosition;
+    [SerializeField] private float shakeTime;
+    [SerializeField] private float shakeIntensity;
+    private Vector3 originRotation;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        base.Awake();
+        originRotation = transform.eulerAngles;
+    }
+    public void OnShakeCamera(float shakeTime =1.0f,float shakeIntensity =0.1f)
+    {
+        this.shakeTime = shakeTime;
+        this.shakeIntensity = shakeIntensity;
 
-        originalPosition = transform.localPosition;
+        StopCoroutine("ShakeByRotation");
+        StartCoroutine("ShakeByRotation");
+        
     }
 
-    public void Shake(float duration)
+    private IEnumerator ShakeByRotation()
     {
-        StopAllCoroutines();
-        StartCoroutine(ShakeCoroutine(duration));
-    }
+        Vector3 startRotation = transform.eulerAngles;
 
-    private IEnumerator ShakeCoroutine(float duration)
-    {
-        float halfDuration = duration / 2f;
-        float elapsed = 0f;
-        float tick = Random.Range(-10f, 10f);
+        float power = 10f;
 
-        while (elapsed < duration)
+        while (shakeTime > 0.0f)
         {
-            elapsed += Time.deltaTime / halfDuration;
+            float x = 0;
+            float y = 0;
+            float z = Random.Range(-1f,1f);
+            transform.rotation = Quaternion.Euler(startRotation + new Vector3(x, y, z) * shakeIntensity * power);
 
-            tick += Time.deltaTime * m_roughness;
-            Vector3 shakeOffset = new Vector3(
-                Mathf.PerlinNoise(tick, 0f) - 0.5f,
-                Mathf.PerlinNoise(0f, tick) - 0.5f,
-                0f
-            ) * m_magnitude * Mathf.PingPong(elapsed, halfDuration);
-
-            transform.localPosition = originalPosition + shakeOffset;
+            shakeTime -= Time.deltaTime;
             yield return null;
         }
 
-        transform.localPosition = originalPosition; 
+        transform.rotation = Quaternion.Euler(originRotation); 
     }
 }

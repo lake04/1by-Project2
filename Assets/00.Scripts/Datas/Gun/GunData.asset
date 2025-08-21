@@ -19,13 +19,12 @@ MonoBehaviour:
   damage: 4
   ammoPerShot: 1
   bulletsPerShot: 1
-  bulletSpread: 0
+  bulletSpread: 20
   reloadTime: 2
   fireRate: 4
-  bulletSpeed: 7
+  bulletSpeed: 30
   canEquipParts: 1
   parts: 3
   maxAmmo: 6
-  curAmmo: 0
   baseDamage: 0
   basefireRate: 0
