@@ -131,14 +131,14 @@ TextureImporter:
         width: 73
         height: 46
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05e55edba77c9264188606be4c210f4e
-      internalID: 1215044547
+      spriteID: 6ab4adb44f0032948b2237cd9d52f050
+      internalID: 1427371451
       vertices: []
       indices: 
       edges: []
@@ -152,35 +152,14 @@ TextureImporter:
         width: 74
         height: 47
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19b5337e48538dd4394b63c6cbd0666e
-      internalID: 1614023970
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MouseAttack_2
-      rect:
-        serializedVersion: 2
-        x: 306
-        y: 50
-        width: 16
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5572580b9578add4b8cb96c81241b93b
-      internalID: 68844710
+      spriteID: bb3a1c20498b4bc4895feb610a87b2a5
+      internalID: -39550933
       vertices: []
       indices: 
       edges: []
@@ -189,40 +168,19 @@ TextureImporter:
       name: MouseAttack_3
       rect:
         serializedVersion: 2
-        x: 321
+        x: 305
         y: 24
-        width: 74
-        height: 44
+        width: 90
+        height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81079a4cbfcf6d146966c0a66bb42aa0
-      internalID: 1577786635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MouseAttack_4
-      rect:
-        serializedVersion: 2
-        x: 446
-        y: 31
-        width: 16
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 379dd2675bb9b2346b6ea9f6b2e04a4f
-      internalID: -1109719433
+      spriteID: e1735bd4e6c45cf468595495555af9cf
+      internalID: 2098726051
       vertices: []
       indices: 
       edges: []
@@ -231,40 +189,19 @@ TextureImporter:
       name: MouseAttack_5
       rect:
         serializedVersion: 2
-        x: 461
+        x: 443
         y: 24
-        width: 74
+        width: 92
         height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a332d25017b348b4aac1632dade054d5
-      internalID: -546859405
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MouseAttack_6
-      rect:
-        serializedVersion: 2
-        x: 585
-        y: 34
-        width: 15
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7a27f7121fb31ad4dbf225c6063b4314
-      internalID: 1829249491
+      spriteID: 668643fe324c9c54a86c64a8491b173d
+      internalID: -1654991533
       vertices: []
       indices: 
       edges: []
@@ -273,40 +210,19 @@ TextureImporter:
       name: MouseAttack_7
       rect:
         serializedVersion: 2
-        x: 601
+        x: 583
         y: 24
-        width: 74
+        width: 92
         height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5eade2424d404ec4db817b1a7fb7fa45
-      internalID: -144576981
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MouseAttack_8
-      rect:
-        serializedVersion: 2
-        x: 307
-        y: 25
-        width: 15
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d112d0796282ecd41aa4b690754b4da0
-      internalID: 239495325
+      spriteID: 09a74ad95c2023e40a93efdef4480c2e
+      internalID: -1625274062
       vertices: []
       indices: 
       edges: []
@@ -322,15 +238,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MouseAttack_0: 1215044547
-      MouseAttack_1: 1614023970
-      MouseAttack_2: 68844710
-      MouseAttack_3: 1577786635
-      MouseAttack_4: -1109719433
-      MouseAttack_5: -546859405
-      MouseAttack_6: 1829249491
-      MouseAttack_7: -144576981
-      MouseAttack_8: 239495325
+      MouseAttack_0: 1427371451
+      MouseAttack_1: -39550933
+      MouseAttack_2: -1364738340
+      MouseAttack_3: 2098726051
+      MouseAttack_4: -1214082167
+      MouseAttack_5: -1654991533
+      MouseAttack_6: -829868431
+      MouseAttack_7: -1625274062
+      MouseAttack_8: 1887557160
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

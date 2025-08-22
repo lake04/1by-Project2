@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-
     public Transform[] spawnPoint;
     public SpawnData[] spawnData;
-    public GameObject enemyPrefbas;
+    public GameObject[] enemyPrefbas;
     public float levelTime;
     int level;
     float timer;
@@ -39,17 +38,21 @@ public class Spawner : MonoBehaviour
     void Spwan()
     {
         Debug.Log("½ºÆù");
-        GameObject enemy = PoolingManager.Instance.GetObject(enemyPrefbas, transform.position, Quaternion.identity);
+        int enemyIndex = UnityEngine.Random.Range(0, spawnData[level].enemys.Length);
+        GameObject enemy = PoolingManager.Instance.GetObject(enemyPrefbas[enemyIndex], transform.position, Quaternion.identity);
         enemy.transform.position = spawnPoint[UnityEngine.Random.Range(1, spawnPoint.Length)].position;
-        enemy.GetComponent<Enemy>().Init(spawnData[level], player);
+    
+        enemy.GetComponent<EnemyBase>().Init(spawnData[level], player);
         
+        
+
     }
 }
 
 [System.Serializable]
 public class SpawnData
 {
-    public int[] spriteType;
+    public int[] enemys;
     public float spawnTime;
     public int health;
     public float speed;

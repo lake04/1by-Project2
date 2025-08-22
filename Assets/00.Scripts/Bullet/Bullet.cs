@@ -57,10 +57,10 @@ public class Bullet : MonoBehaviour
             Return();
         }
 
-        if(collision.CompareTag("Enemy"))
+        if(collision.CompareTag("Enemy") && collision.GetComponent<EnemyBase>().isLive)
         {
             GameObject enemy = collision.gameObject;
-            enemy.GetComponent<Enemy>().TakeDamage(damage);
+            enemy.GetComponent<EnemyBase>().TakeDamage(damage);
             GameObject curHit = hitPartcle;
             if (hitPartcle != null)
             {

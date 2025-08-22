@@ -47,16 +47,38 @@ public class PoolingManager : Singleton<PoolingManager>
         return GetObject(k, pos, rot).GetComponent<T>();
     }
 
-    public void Return(GameObject k)
+
+    public void Return(GameObject k, float time = 0f)
+    {
+        if (time <= 0f)
+        {
+            DoReturn(k);
+        }
+        else
+        {
+            StartCoroutine(ReturnAfterTime(k, time));
+        }
+    }
+
+    private IEnumerator ReturnAfterTime(GameObject k, float time)
+    {
+        yield return new WaitForSeconds(time);
+        DoReturn(k);
+    }
+
+    private void DoReturn(GameObject k)
     {
         if (!pools.ContainsKey(k))
         {
             Destroy(k);
             return;
         }
+
         Pool pool = pools[k];
         k.transform.SetParent(transform);
         k.SetActive(false);
         pool.pooled.Push(k);
     }
+
+
 }
