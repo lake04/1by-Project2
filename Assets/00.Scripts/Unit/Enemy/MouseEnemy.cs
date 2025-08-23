@@ -5,15 +5,32 @@ using UnityEngine;
 public class MouseEnemy : EnemyBase
 {
 
-   
+    protected void Update()
+    {
+        if (!isLive)
+            return;
+        Vector2 attackDir = spriter.flipX ? Vector2.right : Vector2.left;
 
+        float dist = Vector2.Distance(transform.position, target.transform.position);
+        RaycastHit2D raycastHit2 = Physics2D.Raycast(transform.position, attackDir, attackRange, playerLayer);
+        Debug.DrawRay(transform.position, attackDir * attackRange, Color.red);
+        if (raycastHit2.collider != null && raycastHit2.collider.CompareTag("Player"))
+        {
+            Debug.Log("Player 공격 범위 안!");
+            StartCoroutine(Attack());
+        }
+        else
+        {
+            MoveTo(target.transform.position);
+        }
+    }
 
     protected override void MoveTo(Vector3 targetPos)
     {
         if (!isLive)
             return;
 
-        anim.SetInteger("EnemyState", 1);
+        //anim.SetInteger("EnemyState", 1);
 
         Vector2 targetPod = new Vector2(target.transform.position.x, target.transform.position.y);
         Vector2 dirVec = targetPod - rb.position;
@@ -36,16 +53,7 @@ public class MouseEnemy : EnemyBase
     }
 
 
-    public void Idle()
-    {
-        if (anim) anim.SetInteger("EnemyState", 0);
-    }
 
-    protected virtual void Attack()
-    {
-        isMove = false;
-
-        anim.SetInteger("EnemyState", 2);
-    }
+ 
 
 }

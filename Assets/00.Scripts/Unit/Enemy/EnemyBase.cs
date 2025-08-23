@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyBase : Unit
@@ -29,6 +30,7 @@ public class EnemyBase : Unit
     {
         curHp = maxHp;
         attackObject.GetComponent<EnemyAttackOb>().damage = damage;
+        attackObject.SetActive(false);
         isLive = true;
     }
 
@@ -46,15 +48,15 @@ public class EnemyBase : Unit
     {
         if (!isLive)
             return;
+        Vector2 attackDir = spriter.flipX ? Vector2.left : Vector2.right;
 
         float dist = Vector2.Distance(transform.position, target.transform.position);
-
-        if (dist < attackRange)
+        RaycastHit2D raycastHit2 = Physics2D.Raycast(transform.position, attackDir, attackRange,playerLayer);
+        Debug.DrawRay(transform.position, attackDir * attackRange, Color.red);
+        if (raycastHit2.collider != null && raycastHit2.collider.CompareTag("Player"))
         {
-            if (!isAttacking)
-            {
-                StartCoroutine(AttackRoutine());
-            }
+            Debug.Log("Player 공격 범위 안!");
+            StartCoroutine(Attack());
         }
         else
         {
@@ -88,16 +90,21 @@ public class EnemyBase : Unit
     }
 
 
-    protected virtual IEnumerator AttackRoutine()
+    protected virtual IEnumerator Attack()
     {
-        isAttacking = true;
+        if (isAttacking)
+            yield return 0;
+            isAttacking = true;
         canDamage = true;
 
-        Attack();
+        isMove = false;
+
+        anim.SetTrigger("isAttack");
 
         yield return new WaitForSeconds(attackDelay);
 
         isAttacking = false;
+        canDamage = false;
     }
 
     protected virtual void Idle()
@@ -105,12 +112,6 @@ public class EnemyBase : Unit
         if (anim) anim.SetInteger("EnemyState", 0);
     }
 
-    protected virtual void Attack()
-    {
-        isMove = false;
-
-        if (anim) anim.SetInteger("EnemyState", 1);
-    }
 
     protected virtual void DoDamage()
     {

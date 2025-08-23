@@ -31,12 +31,7 @@ public class Enemy : EnemyBase
     //}
 
 
-    public void Attack()
-    {
-        isMove = false;
-
-        if (anim) anim.SetInteger("EnemyState", 1);
-    }
+  
 
     public void DoDamage()
     {
