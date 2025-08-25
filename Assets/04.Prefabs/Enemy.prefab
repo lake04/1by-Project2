@@ -404,7 +404,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
   attackBoxRange: 0.6
   attackObject: {fileID: 906654781734452462}
   speed: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   - {fileID: 22100000, guid: d66ec4581c28aee44b51f378050e13ef, type: 2}
   target: {fileID: 0}
   isLive: 1
-  attackRange: 1.45
+  attackRange: 1.4
   attackDelay: 2
 --- !u!95 &3273758972069885666
 Animator:

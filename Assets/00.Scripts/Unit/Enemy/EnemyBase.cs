@@ -53,7 +53,7 @@ public class EnemyBase : Unit
         float dist = Vector2.Distance(transform.position, target.transform.position);
         RaycastHit2D raycastHit2 = Physics2D.Raycast(transform.position, attackDir, attackRange,playerLayer);
         Debug.DrawRay(transform.position, attackDir * attackRange, Color.red);
-        if (raycastHit2.collider != null && raycastHit2.collider.CompareTag("Player"))
+        if (raycastHit2.collider != null && raycastHit2.collider.CompareTag("Hit"))
         {
             Debug.Log("Player 공격 범위 안!");
             StartCoroutine(Attack());
