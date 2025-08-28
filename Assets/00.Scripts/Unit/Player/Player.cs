@@ -43,11 +43,14 @@ public class Player : Unit
     public GameObject hand;
     public Transform aimingPoint;
     public Gun gun;
+    public ParticleSystem cartridgeCase;
 
     private float bulletSpeed = 20f;
 
     float handAngle;
     Vector2 target, mouse;
+    [SerializeField]
+    private FireEffct fireEffect;
 
     #endregion
 
@@ -105,6 +108,8 @@ public class Player : Unit
 
         target = transform.position;
         noAmmoText.gameObject.SetActive(false);
+
+        cartridgeCase.Stop();
     }
 
     #region ¿òÁ÷ÀÓ 
@@ -223,6 +228,7 @@ public class Player : Unit
             {
                 if (gun.curAmmo >= gun.ammoPerShot)
                 {
+                    fireEffect.FireAnim(gun.element);
                     CameraShake.Instance.OnShakeCamera(0.25f, 0.23f);
                     StartCoroutine(gun.Fire(UnitType.enemy));
                 }
@@ -239,6 +245,7 @@ public class Player : Unit
         {
             if (Input.GetKeyDown(KeyCode.R) && gun.isReloading == false)
             {
+                cartridgeCase.Play();
                 StartCoroutine(gun.Reload());
             }
         }

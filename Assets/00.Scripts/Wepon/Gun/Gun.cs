@@ -106,7 +106,7 @@ public class Gun : MonoBehaviour
         {
             if (collider.CompareTag("Enemy"))
             {
-                collider.GetComponent<Enemy>().TakeDamage(damage);
+                collider.GetComponent<BatEnemy>().TakeDamage(damage);
             }
         }
 
@@ -139,6 +139,7 @@ public class Gun : MonoBehaviour
         //UiManager.instance.UpdateUI();
         isReloading = false;
         slider.gameObject.SetActive(false);
+        Player.Instance.cartridgeCase.Stop();
     }
 
     private float AttackTime()

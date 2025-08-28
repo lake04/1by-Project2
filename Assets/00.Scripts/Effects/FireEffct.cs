@@ -19,6 +19,7 @@ public class FireEffct : MonoBehaviour
     
     public void FireAnim(Element element)
     {
+        Debug.Log("√— πﬂªÁ ¿Ã∆Â∆Æ");
         int elementIndex = (int)element;
         A_OnToggle(1);
         animator.SetInteger("fire", elementIndex);

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,12 +26,20 @@ public class EnemyBase : Unit
 
     protected bool isAttacking = false;
 
+    WaitForFixedUpdate wait;
+
+    [SerializeField]
+    SpriteRenderer overlay;
+
+    Coroutine hitRoutine;
+
     private void OnEnable()
     {
         curHp = maxHp;
         attackObject.GetComponent<EnemyAttackOb>().damage = damage;
         attackObject.SetActive(false);
         isLive = true;
+        overlay.gameObject.SetActive(false);
     }
 
     protected void Awake()
@@ -51,11 +59,11 @@ public class EnemyBase : Unit
         Vector2 attackDir = spriter.flipX ? Vector2.left : Vector2.right;
 
         float dist = Vector2.Distance(transform.position, target.transform.position);
-        RaycastHit2D raycastHit2 = Physics2D.Raycast(transform.position, attackDir, attackRange,playerLayer);
+        RaycastHit2D raycastHit2 = Physics2D.Raycast(transform.position, attackDir, attackRange, playerLayer);
         Debug.DrawRay(transform.position, attackDir * attackRange, Color.red);
         if (raycastHit2.collider != null && raycastHit2.collider.CompareTag("Hit"))
         {
-            Debug.Log("Player °ø°Ý ¹üÀ§ ¾È!");
+            Debug.Log("Player ê³µê²© ë²”ìœ„ ì•ˆ!");
             StartCoroutine(Attack());
         }
         else
@@ -94,7 +102,7 @@ public class EnemyBase : Unit
     {
         if (isAttacking)
             yield return 0;
-            isAttacking = true;
+        isAttacking = true;
         canDamage = true;
 
         isMove = false;
@@ -131,13 +139,35 @@ public class EnemyBase : Unit
 
     public virtual void TakeDamage(float _damage)
     {
-        Debug.Log("ÇÇ°Ý ´çÇÔ");
+        Debug.Log("í”¼ê²© ë‹¹í•¨");
         curHp -= _damage;
+        OnHit();
         if (curHp <= 0)
         {
-            Die();
+            StartCoroutine(KnockBack());
+
         }
     }
+
+    public void OnHit()
+    {
+        if (hitRoutine != null) StopCoroutine(hitRoutine);
+        hitRoutine = StartCoroutine(HitEffect());
+    }
+
+    IEnumerator HitEffect()
+    {
+        Color c = overlay.color;
+
+        c = new Color(c.r, c.g, c.b, 0.4f);
+        overlay.color = c;
+
+        overlay.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        overlay.gameObject.SetActive(false);
+        hitRoutine = null;
+    }
+
 
     protected virtual void EndAttack()
     {
@@ -156,9 +186,18 @@ public class EnemyBase : Unit
 
     protected virtual void EndDie()
     {
-        PoolingManager.Instance.Return(gameObject,0.2f);
+        PoolingManager.Instance.Return(gameObject, 0.2f);
 
     }
 
-  
+    protected IEnumerator KnockBack()
+    {
+        yield return wait;
+        Vector3 playerPos = target.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        rb.AddForce(dirVec.normalized * 4.5f, ForceMode2D.Impulse);
+        Die();
+        Debug.Log("ë„‰ë°±");
+    }
 }
+  

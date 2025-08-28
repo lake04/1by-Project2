@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : EnemyBase
+public class BatEnemy : EnemyBase
 {
 
     //public virtual void MoveTo(Vector3 targetPos)
@@ -29,6 +29,7 @@ public class Enemy : EnemyBase
     //    }
      
     //}
+
 
 
   
